@@ -26,6 +26,6 @@ class Product : ObservableObject {
         self.soldBy = soldBy
     }
     
-    @Relationship(deleteRule: .noAction)
+    @Relationship(deleteRule: .nullify)
     var soldBy : User?
 }

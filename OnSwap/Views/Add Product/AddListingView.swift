@@ -21,6 +21,7 @@ struct AddListingView: View {
     @State private var productLocation: String = ""
     @State private var productImage: PhotosPickerItem?
     @State private var imageData: Data?
+    @State private var isPosted = false
     
     var body: some View {
         ZStack {
@@ -59,9 +60,10 @@ struct AddListingView: View {
                 HStack {
                     Spacer()
                     Button(action: addProduct){
-                        Text("Post")
+                        Text(isPosted ? "Posted" : "Post")
                         .foregroundStyle(LinearGradient(colors: [.blue, .indigo], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .padding(.all, 10)
+                        .disabled(isPosted)
                     }
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -90,12 +92,12 @@ struct AddListingView: View {
     }
     
     func addProduct() {
-        guard let imageData, let productPrice = Double(productPrice), !productTitle.isEmpty else { print("form invalid"); return }
+        guard !isPosted, let imageData, let productPrice = Double(productPrice), !productTitle.isEmpty else { print("form invalid"); return }
         
         let product = Product(title: productTitle, descriptionText: productDescription, price: productPrice, location: productLocation, image: imageData, soldBy: nil)
-        context.insert(product)
-        product.soldBy = currentUserObject.currentUser
-        try? context.save()
-        print("product inserted")
+            context.insert(product)
+            product.soldBy = currentUserObject.currentUser
+            isPosted = true
+            dismiss()
     }
 }

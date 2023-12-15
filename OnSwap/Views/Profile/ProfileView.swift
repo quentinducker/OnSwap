@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var currentUserObject: CurrentUserObject
-    @StateObject var userBeingViewed: User
+    @Bindable var userBeingViewed: User
     
     
     var body: some View {
