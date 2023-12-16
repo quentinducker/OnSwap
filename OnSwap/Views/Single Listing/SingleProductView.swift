@@ -168,6 +168,10 @@ struct SingleProductView: View {
                 print(isSaved)
             }
         }
+        else {
+            AllProducts()
+                .environmentObject(currentUserObject)
+        }
     }
     
     func isItemSaved(user: User, product: Product) -> Bool {
